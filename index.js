@@ -37,7 +37,7 @@ function prefixFormat(val) {
 				low = curr;
 				return (curr = next());
 			},
-			current: function () { return curr; }
+			valueOf: function () { return curr; }
 		};
 	}
 
@@ -51,11 +51,11 @@ function prefixFormat(val) {
 			search.low();
 		}
 		
-		formatted = format(val, search.current());
+		formatted = format(val, search.valueOf());
 
 	} while ( tooBig() || tooSmall() );
 
-	return [formatted, prefixes[search.current()]];
+	return [formatted, prefixes[search.valueOf()]];
 }
 
 function parts(val) {
