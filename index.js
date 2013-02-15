@@ -2,60 +2,16 @@ var prefixes = ["y","z","a","f","p","n","µ","m","","k","M","G","T","P","E","Z",
 var len = prefixes.length;
 
 function prefixFormat(val) {
-	var maxDigits = 3;
+	var expo = val.toExponential();
+	var negativeExp = val<1;
+	var parts = expo.split( 'e' );
+	var exp = ~~parts[1];
+	var index = Math.floor(exp / 3);
+	
+	var shift = exp - 3 * index;
 
-	var result;
-	var formatted = val;
-
-	function tooSmall() {
-		return formatted <1 && (result = 'small');
-	}
-
-	function tooBig() {
-		return formatted >= Math.pow(10, maxDigits) && (result = 'big');
-	}
-
-	function nextCandidate() {
-		return Math.floor((smallest + highest) / 2);
-	}
-
-	function format(v, candidate) {
-		return v / Math.pow(10, (candidate-8) * 3);
-	}
-
-	function bisect(low, high) {
-		var curr = next();
-		function next() {
-			return Math.floor((low + high)/2);
-		}
-		return {
-			high: function () {
-				high = curr;
-				return (curr = next());
-			},
-			low: function() {
-				low = curr;
-				return (curr = next());
-			},
-			valueOf: function () { return curr; }
-		};
-	}
-
-	search = bisect(0, len);
-
-	do {
-		if (result == "small") {
-			search.high();
-		}
-		if (result == "big") {
-			search.low();
-		}
-		
-		formatted = format(val, search.valueOf());
-
-	} while ( tooBig() || tooSmall() );
-
-	return [formatted, prefixes[search.valueOf()]];
+	return [parts[0] * Math.pow(10, shift),
+		prefixes[index + 8]];
 }
 
 function parts(val) {
@@ -67,3 +23,4 @@ function format(val) {
 }
 
 module.exports = format;
+module.exports.parts = parts;
