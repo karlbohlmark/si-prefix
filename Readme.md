@@ -1,7 +1,7 @@
 
 # si-prefix
 
-  SI prefixes (kilo, Mega, Giga etc)
+  SI prefixes (Metric prefix) http://en.wikipedia.org/wiki/Metric_prefix
 
 ## Installation
 
