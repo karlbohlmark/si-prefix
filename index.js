@@ -3,7 +3,6 @@ var len = prefixes.length;
 
 function prefixFormat(val) {
 	var expo = val.toExponential();
-	var negativeExp = val<1;
 	var parts = expo.split( 'e' );
 	var exp = ~~parts[1];
 	var index = Math.floor(exp / 3);
